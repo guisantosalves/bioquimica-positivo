@@ -1,0 +1,62 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+.main-container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  background-color: #bcb8b1;
+}
+
+.container-login {
+  background-color: #f4f3ee;
+  width: 80%;
+  height: 80%;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.img-login {
+  width: 60%;
+  height: 100%;
+  border-radius: 8px;
+  background-image: url("../assets/biomed-logo.jpg");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.container-forms {
+  width: 40%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  width: 250px;
+}
+
+.btn-login-container {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-login-container > button {
+  border: none;
+  width: 100px;
+  height: 50px;
+  background-color: #e0afa0;
+  border-radius: 8px;
+}
