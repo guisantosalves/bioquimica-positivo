@@ -6,7 +6,10 @@ import ExameSchemaController from "./ExameSchemaController.js";
 const routes = express.Router();
 
 // cliente (paciente/estudante)
-routes.route("/cliente").get(ClienteController.getClientes);
+routes
+  .route("/cliente")
+  .get(ClienteController.getClientes)
+  .post(ClienteController.postCliente);
 
 // exame schema
 routes.route("/schema").get(ExameSchemaController.getSchemas);

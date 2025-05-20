@@ -4,4 +4,8 @@ export default class ClienteController {
     // some logic here
     ClienteService.getClientes(req, res);
   }
+
+  static postCliente(req, res) {
+    ClienteService.createCliente(req, res);
+  }
 }
