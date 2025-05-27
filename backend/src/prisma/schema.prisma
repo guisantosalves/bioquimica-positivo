@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Cliente {
+model User {
   id             String   @id @default(uuid())
   nome           String
   cpf            String   @unique
@@ -23,7 +23,20 @@ model Cliente {
   email          String   @unique
   endereco       String
   senha          String
-  Paciente       Boolean
+  RGM            String?
+  admin          Boolean
+}
+
+model Paciente {
+  id             String   @id @default(uuid())
+  nome           String
+  cpf            String   @unique
+  dataNascimento DateTime
+  sexo           String   @db.Char(1)
+  telefone       String
+  email          String   @unique
+  endereco       String
+  senha          String
   RGM            String?
   exame          Exame[]
 }
@@ -37,7 +50,7 @@ model Exame {
   responsavel      String
   observacoes      String
 
-  paciente Cliente     @relation(fields: [idPaciente], references: [id])
+  paciente Paciente    @relation(fields: [idPaciente], references: [id])
   schema   ExameSchema @relation(fields: [idSchema], references: [id])
 }
 
