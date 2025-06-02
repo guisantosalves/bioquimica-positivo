@@ -25,7 +25,7 @@ export default class ExameSchemaService {
       });
       return newExameSchema;
     } catch (error) {
-      console.error("Error creating schema in service:", error);
+      console.error("Erro ao criar o schema no serviço:", error);
       
       throw { status: 500, message: 'Erro ao criar o schema do exame.' };
     }
@@ -36,7 +36,7 @@ export default class ExameSchemaService {
       const schemas = await prisma.exameSchema.findMany();
       return schemas;
     } catch (error) {
-      console.error("Error fetching all schemas in service:", error);
+      console.error("Erro ao buscar todos os schemas no serviço:", error);
       throw { status: 500, message: 'Erro ao buscar os schemas dos exames.' };
     }
   }
@@ -56,7 +56,7 @@ export default class ExameSchemaService {
       }
       return schema;
     } catch (error) {
-      console.error(`Error fetching schema by ID ${id} in service:`, error);
+      console.error(`Erro ao buscar o schema pelo ID ${id} no serviço:`, error);
       if (error.status) throw error; 
       throw { status: 500, message: 'Erro ao buscar o schema do exame.' };
     }
@@ -94,7 +94,7 @@ export default class ExameSchemaService {
       });
       return updatedSchema;
     } catch (error) {
-      console.error(`Error updating schema ID ${id} in service:`, error);
+      console.error(`Erro ao atualizar o schema com ID ${id} no serviço:`, error);
       
       if (error.code === 'P2025') {
         throw { status: 404, message: 'Schema de exame não encontrado para atualização.' };
