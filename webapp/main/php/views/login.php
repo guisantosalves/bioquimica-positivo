@@ -9,7 +9,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./css/login.css" />
     <title>Login</title>
   </head>
   <body>
@@ -18,7 +18,7 @@
         <div class="img-login"></div>
         <div class="container-forms">
           <div>
-            <form method="get" action="./php/login/login.php">
+            <form method="get" action="../controllers/loginController.php">
               <div class="input-container">
                 <label class="form-label" for="emailInputLogin">Email</label>
                 <input

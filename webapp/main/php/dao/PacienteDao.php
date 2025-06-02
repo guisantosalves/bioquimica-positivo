@@ -1,10 +1,10 @@
 <?php
-class ClienteDao implements ICrudData
+class PacienteDao implements ICrudData
 {
-    public function inserir($cliente)
+    public function inserir($paciente)
     {
     }
-    public function update(int $id, $cliente)
+    public function update(int $id, $paciente)
     {
     }
     public function delete(int $id)

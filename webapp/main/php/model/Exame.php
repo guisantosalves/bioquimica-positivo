@@ -10,7 +10,7 @@ class Exame implements IGenericMainData
     private string $responsavel;
     private string $observacoes;
 
-    private Cliente $paciente;
+    private Paciente $paciente;
     private ExameSchema $schema;
 
     public function __construct(
@@ -21,7 +21,7 @@ class Exame implements IGenericMainData
         array $dadosPreenchidos,
         string $responsavel,
         string $observacoes,
-        Cliente $paciente,
+        Paciente $paciente,
         ExameSchema $schema
     ) {
         $this->id = $id;

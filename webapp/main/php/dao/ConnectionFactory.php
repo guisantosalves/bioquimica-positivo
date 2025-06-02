@@ -20,6 +20,7 @@ class ConnectionFactory
 
             }
         }
+        return $connection;
     }
 }
 
