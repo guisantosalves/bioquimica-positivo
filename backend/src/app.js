@@ -1,9 +1,12 @@
 import express from "express";
+import morgan from "morgan";
 import routes from "./controllers/routes.js";
 import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+
+app.use(morgan("dev")); // Middleware para logar as requisições
 
 // Middlewares para processar o corpo da requisição
 app.use(express.json()); // Para processar corpos de requisição JSON

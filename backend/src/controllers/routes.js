@@ -14,16 +14,25 @@ routes
 // exame schema
 routes
   .route("/schema")
-  .post(ExameSchemaController.createSchema)     
-  .get(ExameSchemaController.getAllSchemas);   
-  
+  .post(ExameSchemaController.createSchema)
+  .get(ExameSchemaController.getAllSchemas);
+
 routes
   .route("/schema/:id")
-  .get(ExameSchemaController.getSchemaById)    
-  .put(ExameSchemaController.updateSchema)     
-  .delete(ExameSchemaController.deleteSchema); 
+  .get(ExameSchemaController.getSchemaById)
+  .put(ExameSchemaController.updateSchema)
+  .delete(ExameSchemaController.deleteSchema);
 
 // exame
-routes.route("/exame").get(ExameController.getExames);
+routes
+  .route("/exame")
+  .get(ExameController.getExames)
+  .post(ExameController.createExame);
+
+routes
+  .route("/exame/:id")
+  .get(ExameController.getExameById)
+  .put(ExameController.updateExame)
+  .delete(ExameController.deleteExame);
 
 export default routes;
