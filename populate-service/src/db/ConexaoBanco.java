@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConexaoBanco {
   private static final String URL =
-      "jdbc:mysql://localhost:3306/bioquimica?useSSL=false&serverTimezone=UTC";
+      "jdbc:mysql://localhost:3306/bioquimica?useSSL=false";
   private static final String USUARIO = "root";
   private static final String SENHA = "";
   private static Connection connection;
