@@ -23,7 +23,7 @@ public class UserService implements ICrud {
       return;
     }
 
-    String sql = "INSERT INTO Usuarios (id, nome, cpf, data_nascimento, sexo, telefone, email, endereco, senha, rgm, admin) " +
+    String sql = "INSERT INTO User (id, nome, cpf, dataNascimento, sexo, telefone, email, endereco, senha, rgm, admin) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement pstmt = con.prepareStatement(sql)) {

@@ -62,7 +62,7 @@ public class ExameService implements ICrud {
       return;
     }
 
-    String sql = "INSERT INTO Exames (id, id_paciente, id_schema, data_realizacao, dados_preenchidos, responsavel, observacoes) " +
+    String sql = "INSERT INTO Exame (id, idPaciente, idSchema, dataRealizacao, dadosPreenchidos, responsavel, observacoes) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement pstmt = con.prepareStatement(sql)) {

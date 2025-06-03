@@ -23,7 +23,7 @@ public class PacienteService implements ICrud {
       return;
     }
 
-    String sql = "INSERT INTO Pacientes (id, nome, cpf, data_nascimento, sexo, telefone, email, endereco, senha, rgm) " +
+    String sql = "INSERT INTO Paciente (id, nome, cpf, dataNascimento, sexo, telefone, email, endereco, senha, rgm) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement pstmt = con.prepareStatement(sql)) {
