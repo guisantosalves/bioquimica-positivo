@@ -4,16 +4,16 @@ class ExameDao implements ICrudData
     public function inserir($exame)
     {
     }
-    public function update(int $id, $exame)
+    public function update(string $id, $exame)
     {
     }
-    public function delete(int $id)
+    public function delete(string $id)
     {
     }
     public function read()
     {
     }
-    public function readById(int $id)
+    public function readById(string $id)
     {
     }
 }

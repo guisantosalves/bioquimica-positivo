@@ -1,5 +1,5 @@
 <?php
-
+require __DIR__ . '/../dao/IGenericMainData.php';
 class User implements IGenericMainData
 {
     private string $id;
