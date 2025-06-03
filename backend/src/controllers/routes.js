@@ -12,7 +12,16 @@ routes
   .post(PacienteController.postPaciente);
 
 // exame schema
-routes.route("/schema").get(ExameSchemaController.getSchemas);
+routes
+  .route("/schema")
+  .post(ExameSchemaController.createSchema)     
+  .get(ExameSchemaController.getAllSchemas);   
+  
+routes
+  .route("/schema/:id")
+  .get(ExameSchemaController.getSchemaById)    
+  .put(ExameSchemaController.updateSchema)     
+  .delete(ExameSchemaController.deleteSchema); 
 
 // exame
 routes.route("/exame").get(ExameController.getExames);

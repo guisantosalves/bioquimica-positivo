@@ -5,6 +5,10 @@ dotenv.config();
 
 const app = express();
 
+// Middlewares para processar o corpo da requisição
+app.use(express.json()); // Para processar corpos de requisição JSON
+app.use(express.urlencoded({ extended: true })); // Para processar corpos de requisição URL-encoded
+
 // routing
 app.use(routes);
 

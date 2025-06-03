@@ -1,5 +1,125 @@
+import prisma from '../prisma/client.js';
+
 export default class ExameSchemaService {
-  static getSchemas(req, res) {
-    res.status(200).json({ message: "get schemas" });
+  static async createSchema(data) {
+    const { nome, descricao, campos, versao } = data;
+
+    if (!nome || !campos || !Array.isArray(campos)) {
+      throw { status: 400, message: 'Nome e campos (sendo um array) são obrigatórios.' };
+    }
+
+    for (const campo of campos) {
+      if (!campo.campo || !campo.tipo) {
+        throw { status: 400, message: 'Cada item em "campos" deve ter as propriedades "campo" e "tipo".' };
+      }
+    }
+
+    try {
+      const newExameSchema = await prisma.exameSchema.create({
+        data: {
+          nome,
+          descricao: descricao || null, 
+          campos, 
+          versao: versao || '1.0',
+        },
+      });
+      return newExameSchema;
+    } catch (error) {
+      console.error("Erro ao criar o schema no serviço:", error);
+      
+      throw { status: 500, message: 'Erro ao criar o schema do exame.' };
+    }
+  }
+
+  static async getAllSchemas() { 
+    try {
+      const schemas = await prisma.exameSchema.findMany();
+      return schemas;
+    } catch (error) {
+      console.error("Erro ao buscar todos os schemas no serviço:", error);
+      throw { status: 500, message: 'Erro ao buscar os schemas dos exames.' };
+    }
+  }
+
+  static async getSchemaById(id) {
+    const schemaId = parseInt(id);
+    if (isNaN(schemaId)) {
+      throw { status: 400, message: 'ID inválido.' };
+    }
+
+    try {
+      const schema = await prisma.exameSchema.findUnique({
+        where: { id: schemaId },
+      });
+      if (!schema) {
+        throw { status: 404, message: 'Schema de exame não encontrado.' };
+      }
+      return schema;
+    } catch (error) {
+      console.error(`Erro ao buscar o schema pelo ID ${id} no serviço:`, error);
+      if (error.status) throw error; 
+      throw { status: 500, message: 'Erro ao buscar o schema do exame.' };
+    }
+  }
+
+  static async updateSchema(id, data) {
+    const schemaId = parseInt(id);
+    if (isNaN(schemaId)) {
+      throw { status: 400, message: 'ID inválido para atualização.' };
+    }
+
+    const { nome, descricao, campos, versao } = data;
+
+    
+    if (campos && !Array.isArray(campos)) {
+        throw { status: 400, message: '"campos" deve ser um array.' };
+    }
+    if (campos) {
+        for (const campo of campos) {
+            if (!campo.campo || !campo.tipo) {
+                throw { status: 400, message: 'Cada item em "campos" deve ter as propriedades "campo" e "tipo".' };
+            }
+        }
+    }
+    
+    try {
+      const updatedSchema = await prisma.exameSchema.update({
+        where: { id: schemaId },
+        data: {
+          nome,
+          descricao,
+          campos,
+          versao,
+        },
+      });
+      return updatedSchema;
+    } catch (error) {
+      console.error(`Erro ao atualizar o schema com ID ${id} no serviço:`, error);
+      
+      if (error.code === 'P2025') {
+        throw { status: 404, message: 'Schema de exame não encontrado para atualização.' };
+      }
+      throw { status: 500, message: 'Erro ao atualizar o schema do exame.' };
+    }
+  }
+
+  static async deleteSchema(id) {
+    const schemaId = parseInt(id);
+    if (isNaN(schemaId)) {
+      throw { status: 400, message: 'ID inválido para exclusão.' };
+    }
+
+    try {
+      await prisma.exameSchema.delete({
+        where: { id: schemaId },
+      });
+      
+    } catch (error) {
+      console.error(`Error deleting schema ID ${id} in service:`, error);
+      if (error.code === 'P2025') {
+        throw { status: 404, message: 'Schema de exame não encontrado para exclusão.' };
+      }
+      throw { status: 500, message: 'Erro ao excluir o schema do exame.' };
+    }
   }
 }
