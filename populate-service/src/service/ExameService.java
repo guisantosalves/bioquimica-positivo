@@ -2,53 +2,16 @@ package service;
 
 import model.Exame;
 import db.ConexaoBanco;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
-import java.util.Iterator;
+
 
 public class ExameService implements ICrud {
-
-  // Helper para escapar strings para JSON (simplificado) - pode ser movido para uma classe Util
-  private static String escapeJsonString(String str) {
-    if (str == null) return "";
-    return str.replace("\\", "\\\\").replace("\"", "\\\"");
-  }
-
-  // Helper para converter Map<String, Object> para uma string JSON (simplificado) - pode ser movido para uma classe Util
-  private static String mapToJsonString(Map<String, Object> map) {
-    if (map == null || map.isEmpty()) {
-      return "{}";
-    }
-    StringBuilder sb = new StringBuilder();
-    sb.append("{");
-    Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
-    while (iterator.hasNext()) {
-      Map.Entry<String, Object> entry = iterator.next();
-      sb.append("\"").append(escapeJsonString(entry.getKey())).append("\":");
-      Object value = entry.getValue();
-      if (value instanceof String) {
-        sb.append("\"").append(escapeJsonString(value.toString())).append("\"");
-      } else if (value instanceof Number || value instanceof Boolean) {
-        sb.append(value.toString());
-      } else if (value == null) {
-        sb.append("null");
-      } else { // Outros tipos são convertidos para string e escapados
-        sb.append("\"").append(escapeJsonString(value.toString())).append("\"");
-      }
-      if (iterator.hasNext()) {
-        sb.append(",");
-      }
-    }
-    sb.append("}");
-    return sb.toString();
-  }
-
-
   @Override
   public void inserir(IGenericData entidade) {
     if (!(entidade instanceof Exame)) {
@@ -66,6 +29,10 @@ public class ExameService implements ICrud {
             "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+      ObjectMapper objectMapper = new ObjectMapper();
+      String dadosPreenchidosJson = objectMapper.writeValueAsString(exame.getDadosPreenchidos());
+
       pstmt.setInt(1, exame.getId());
       pstmt.setString(2, exame.getIdPaciente());
       pstmt.setInt(3, exame.getIdSchema());
@@ -74,7 +41,7 @@ public class ExameService implements ICrud {
       } else {
         pstmt.setNull(4, java.sql.Types.TIMESTAMP);
       }
-      pstmt.setString(5, mapToJsonString(exame.getDadosPreenchidos())); // Converte para JSON String
+      pstmt.setString(5, dadosPreenchidosJson); // Usa a string JSON gerada pelo Jackson
       pstmt.setString(6, exame.getResponsavel());
       pstmt.setString(7, exame.getObservacoes());
 
@@ -83,6 +50,9 @@ public class ExameService implements ICrud {
 
     } catch (SQLException e) {
       System.err.println("Erro ao inserir exame no banco: " + e.getMessage());
+      e.printStackTrace();
+    } catch (JsonProcessingException e) { // Tratar a exceção do Jackson
+      System.err.println("Erro ao converter dados preenchidos do exame para JSON: " + e.getMessage());
       e.printStackTrace();
     }
   }
