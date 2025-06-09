@@ -9,8 +9,8 @@ export default class ExameSchemaService {
     }
 
     for (const campo of campos) {
-      if (!campo.campo || !campo.tipo) {
-        throw { status: 400, message: 'Cada item em "campos" deve ter as propriedades "campo" e "tipo".' };
+      if (!campo.nome || !campo.tipo) {
+        throw { status: 400, message: 'Cada item em "campos" deve ter as propriedades "nome" e "tipo".' };
       }
     }
 
@@ -18,15 +18,14 @@ export default class ExameSchemaService {
       const newExameSchema = await prisma.exameSchema.create({
         data: {
           nome,
-          descricao: descricao || null, 
-          campos, 
+          descricao: descricao || null,
+          campos,
           versao: versao || '1.0',
         },
       });
       return newExameSchema;
     } catch (error) {
       console.error("Erro ao criar o schema no serviço:", error);
-      
       throw { status: 500, message: 'Erro ao criar o schema do exame.' };
     }
   }
@@ -75,11 +74,11 @@ export default class ExameSchemaService {
         throw { status: 400, message: '"campos" deve ser um array.' };
     }
     if (campos) {
-        for (const campo of campos) {
-            if (!campo.campo || !campo.tipo) {
-                throw { status: 400, message: 'Cada item em "campos" deve ter as propriedades "campo" e "tipo".' };
-            }
+      for (const campo of campos) {
+        if (!campo.nome || !campo.tipo) {
+          throw { status: 400, message: 'Cada item em "campos" deve ter as propriedades "nome" e "tipo".' };
         }
+      }
     }
     
     try {
