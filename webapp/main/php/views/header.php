@@ -2,8 +2,9 @@
     <div class="d-flex justify-content-between w-100 align-items-center">
         <div class="d-flex align-items-center gap-4">
             <h1 href="navbar-brand" class="ps-3">Bioquímica</h1>
-            <div class="d-flex">
+            <div class="d-flex gap-3">
                 <a href="../views/userManagement.php">Gerenciar usuários</a>
+                <a href="schemaManagement.php">Gerenciar Schemas</a>
             </div>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" version="1.1"
