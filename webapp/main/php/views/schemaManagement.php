@@ -39,7 +39,7 @@
                         <label for="campos" class="form-label">Campos (em formato JSON)</label>
                         <textarea class="form-control" id="campos" rows="6" required></textarea>
                         <div class="form-text">
-                            Exemplo: <code>[{"campo":"Hemoglobina", "tipo":"number"}, {"campo":"Observação", "tipo":"text"}]</code>
+                            Exemplo: <code>[{"nome":"Hemoglobina", "tipo":"number"}, {"nome":"Observação", "tipo":"text"}]</code>
                         </div>
                     </div>
 
