@@ -1,72 +1,59 @@
 <?php
 if (isset($_GET['editar'])) {
-    require '../controllers/UserController.php';
+    require '../controllers/PacienteController.php';
 
-    $user = getById($_GET['editar']);
+    $paciente = getPacienteById($_GET['editar']);
 
-    echo "<form method='post' action='../controllers/UserController.php'>
+    echo "<form method='post' action='../controllers/PacienteController.php'>
 
-    <input type='hidden' name='id' value='" . $user->getId() . "'>
+    <input type='hidden' name='id' value='" . $paciente->getId() . "'>
 
     <div class='mb-3'>
         <label for='nome' class='form-label'>Nome</label>
-        <input type='text' class='form-control' name='nome' value='" . $user->getNome() . "'>
+        <input type='text' class='form-control' name='nome' value='" . $paciente->getNome() . "'>
     </div>
 
     <div class='mb-3'>
         <label for='cpf' class='form-label'>CPF</label>
-        <input type='text' class='form-control' name='cpf' value='" . $user->getCpf() . "'>
+        <input type='text' class='form-control' name='cpf' value='" . $paciente->getCpf() . "'>
     </div>
 
     <div class='mb-3'>
         <label for='dataNascimento' class='form-label'>Data de Nascimento</label>
-        <input type='date' class='form-control' name='dataNascimento' value='" . $user->getDataNascimento()->format('Y-m-d') . "'>
+        <input type='date' class='form-control' name='dataNascimento' value='" . $paciente->getDataNascimento()->format('Y-m-d') . "'>
     </div>
 
     <div class='mb-3'>
         <label for='sexo' class='form-label'>Sexo</label>
         <select class='form-control' name='sexo'>
-            <option value='M' " . ($user->getSexo() === 'M' ? 'selected' : '') . ">Masculino</option>
-            <option value='F' " . ($user->getSexo() === 'F' ? 'selected' : '') . ">Feminino</option>
+            <option value='M' " . ($paciente->getSexo() === 'M' ? 'selected' : '') . ">Masculino</option>
+            <option value='F' " . ($paciente->getSexo() === 'F' ? 'selected' : '') . ">Feminino</option>
         </select>
     </div>
 
     <div class='mb-3'>
         <label for='telefone' class='form-label'>Telefone</label>
-        <input type='text' class='form-control' name='telefone' value='" . $user->getTelefone() . "'>
+        <input type='text' class='form-control' name='telefone' value='" . $paciente->getTelefone() . "'>
     </div>
 
     <div class='mb-3'>
         <label for='email' class='form-label'>E-mail</label>
-        <input type='email' class='form-control' name='email' value='" . $user->getEmail() . "'>
+        <input type='email' class='form-control' name='email' value='" . $paciente->getEmail() . "'>
     </div>
 
     <div class='mb-3'>
         <label for='endereco' class='form-label'>Endereço</label>
-        <input type='text' class='form-control' name='endereco' value='" . $user->getEndereco() . "'>
+        <input type='text' class='form-control' name='endereco' value='" . $paciente->getEndereco() . "'>
     </div>
 
     <div class='mb-3'>
-        <label for='senha' class='form-label'>Senha</label>
-        <input type='password' class='form-control' name='senha' placeholder='Deixe em branco para manter a atual'>
-    </div>
-
-    <div class='mb-3'>
-        <label for='RGM' class='form-label'>RGM</label>
-        <input type='text' class='form-control' name='RGM' value='" . $user->getRGM() . "'>
-    </div>
-
-    <div class='mb-3'>
-        <label for='admin' class='form-label'>Administrador?</label>
-        <select class='form-control' name='admin'>
-            <option value='1' " . ($user->isAdmin() ? 'selected' : '') . ">Sim</option>
-            <option value='0' " . (!$user->isAdmin() ? 'selected' : '') . ">Não</option>
-        </select>
+        <label for='rgm' class='form-label'>RGM</label>
+        <input type='text' class='form-control' name='rgm' value='" . $paciente->getRgm() . "'>
     </div>
 
     <div class='w-100 d-flex justify-content-end'>
         <div class='d-flex'>
-            <a href='./userList.php'><button type='button' class='btn btn-danger' name='cancelar'>Cancelar</button></a>
+            <a href='./pacienteList.php'><button type='button' class='btn btn-danger' name='cancelar'>Cancelar</button></a>
             <button type='submit' class='btn btn-primary ms-2' name='salvar'>Salvar</button>
         </div>
     </div>
@@ -75,7 +62,7 @@ if (isset($_GET['editar'])) {
 
 } else {
 
-    echo "<form method='post' action='../controllers/UserController.php'>
+    echo "<form method='post' action='../controllers/PacienteController.php'>
     <div class='mb-3'>
         <label for='nome' class='form-label'>Nome</label>
         <input type='text' class='form-control' name='nome' required>
@@ -95,8 +82,8 @@ if (isset($_GET['editar'])) {
         <label for='sexo' class='form-label'>Sexo</label>
         <select class='form-control' name='sexo' required>
             <option value=''>Selecione</option>
-            <option value='Masculino'>Masculino</option>
-            <option value='Feminino'>Feminino</option>
+            <option value='M'>Masculino</option>
+            <option value='F'>Feminino</option>
             <option value='Outro'>Outro</option>
         </select>
     </div>
@@ -117,28 +104,17 @@ if (isset($_GET['editar'])) {
     </div>
 
     <div class='mb-3'>
-        <label for='senha' class='form-label'>Senha</label>
-        <input type='password' class='form-control' name='senha' required>
-    </div>
-
-    <div class='mb-3'>
         <label for='rgm' class='form-label'>RGM (opcional)</label>
         <input type='text' class='form-control' name='rgm'>
     </div>
 
-    <div class='form-check mb-3'>
-        <input type='checkbox' class='form-check-input' name='admin' value='1' id='admin'>
-        <label class='form-check-label' for='admin'>Administrador</label>
-    </div>
-
-    <div class='w-100 d-flex justify-content-end'> 
+    <div class='w-100 d-flex justify-content-end'>
         <div>
-            <a href='./userList.php'><button type='button' class='btn btn-danger' name='cancelar'>Cancelar</button></a>
+            <a href='./pacienteList.php'><button type='button' class='btn btn-danger' name='cancelar'>Cancelar</button></a>
             <button type='submit' class='btn btn-primary ms-2' name='cadastrar'>Cadastrar</button>
         </div>
     </div>
 
 </form>";
 }
-
 ?>

@@ -14,29 +14,14 @@
 
 .container-login {
   background-color: #f4f3ee;
-  width: 80%;
-  height: 80%;
+  width: 20%;
+  height: 40%;
   border-radius: 8px;
   padding: 10px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-
-.img-login {
-  width: 60%;
-  height: 100%;
-  border-radius: 8px;
-  background-image: url("../assets/biomed-logo.jpg");
-  background-size: 100% 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.container-forms {
-  width: 40%;
-  height: 100%;
-  display: grid;
-  place-items: center;
 }
 
 .input-container {

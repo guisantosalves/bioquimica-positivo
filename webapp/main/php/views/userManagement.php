@@ -16,43 +16,13 @@ if (isset($_GET["excluir"])) {
   <title>Gerenciamento de usuário</title>
 </head>
 
-<body>
+<body style="background-color: #BCB8B1">
   <?php include './header.php' ?>
-  <div class="container">
-    <!-- formulário -->
-    <div class="row">
-      <?php include 'forms/UserForm.php'; ?>
-    </div>
-    <!-- table -->
-    <div class="row">
-      <div class="col mx-4 mt-4">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Nome</th>
-              <th>Cpf</th>
-              <th>Data de nascimento</th>
-              <th>Sexo</th>
-              <th>Telefone</th>
-              <th>Email</th>
-              <th>Endereço</th>
-              <th>RGM</th>
-              <th>admin</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- chamar select * from-->
-            <?php
-            if ($_SERVER["REQUEST_METHOD"] == "GET") {
-              require_once '../controllers/UserController.php';
-              listar();
-            }
-            ?>
-          </tbody>
-        </table>
-
+  <div style="width: 100%; display: flex; justify-content: center;">
+    <div class="mt-3 mb-3 bg-light p-3 border rounded" style="width: 50%;">
+      <div class="container">
+        <!-- formulário -->
+        <?php include 'forms/UserForm.php'; ?>
       </div>
     </div>
   </div>

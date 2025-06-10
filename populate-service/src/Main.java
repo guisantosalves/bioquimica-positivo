@@ -78,7 +78,6 @@ public class Main {
       paciente.setTelefone(faker.phoneNumber().cellPhone());
       paciente.setEmail(faker.internet().emailAddress());
       paciente.setEndereco(faker.address().fullAddress());
-      paciente.setSenha(faker.internet().password(8, 16));
       paciente.setRGM(faker.number().digits(8)); // Assumindo que RGM é obrigatório para Paciente
 
       pacienteService.inserir(paciente);

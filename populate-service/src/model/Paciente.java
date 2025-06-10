@@ -15,7 +15,6 @@ public class Paciente implements IGenericData {
   private String telefone;
   private String email;
   private String endereco;
-  private String senha;
   private String RGM;
   private List<Exame> exames = new ArrayList<>();
 
@@ -83,14 +82,6 @@ public class Paciente implements IGenericData {
 
   public void setEndereco(String endereco) {
     this.endereco = endereco;
-  }
-
-  public String getSenha() {
-    return senha;
-  }
-
-  public void setSenha(String senha) {
-    this.senha = senha;
   }
 
   public String getRGM() {

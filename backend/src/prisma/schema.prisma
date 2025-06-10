@@ -36,7 +36,6 @@ model Paciente {
   telefone       String
   email          String   @unique
   endereco       String
-  senha          String
   RGM            String?
   exame          Exame[]
 }

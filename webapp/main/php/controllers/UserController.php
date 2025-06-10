@@ -17,7 +17,7 @@ if (isset($_POST['cadastrar'])) {
     $user->setAdmin(isset($_POST['admin']) ? (bool) $_POST['admin'] : false); // checkbox ou valor booleano
 
     $userDao->inserir($user);
-    header("Location: ../views/userManagement.php");
+    header("Location: ../views/userList.php");
 }
 
 if (isset($_POST['salvar'])) {
@@ -37,7 +37,7 @@ if (isset($_POST['salvar'])) {
     $userDao = new UserDao();
     $userDao->update($user->getId(), $user);
 
-    header("Location: ../views/userManagement.php");
+    header("Location: ../views/userList.php");
 
 }
 
@@ -48,21 +48,23 @@ function listar()
     $lista = $userDao->read();
     foreach ($lista as $user) {
         echo "<tr>
-            <td>{$user->getId()}</td>
+            <td>" . mb_strimwidth($user->getId(), 0, 10, '...') . "</td>
             <td>{$user->getNome()}</td>
             <td>{$user->getCpf()}</td>
             <td>{$user->getDataNascimento()->format('d/m/Y')}</td>
             <td>{$user->getSexo()}</td>
             <td>{$user->getTelefone()}</td>
             <td>{$user->getEmail()}</td>
-            <td>{$user->getEndereco()}</td>
+            <td>" . mb_strimwidth($user->getEndereco(), 0, 20, '...') . "</td>
             <td>" . ($user->getRGM() ? $user->getRGM() : '-') . "</td>
             <td>" . ($user->isAdmin() ? 'Sim' : 'Não') . "</td>
-            <td>
-                <a href='../views/userManagement.php?editar={$user->getId()}'>
-                    <i class='bi bi-pencil-square'></i> Editar
-                </a> 
-                <a href='../views/userManagement.php?excluir={$user->getId()}'>Excluir</a>
+            <td style='max-width: 150px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;'>
+                <a style='margin-right: 10px;text-decoration: none;color: blue;' href='../views/userManagement.php?editar={$user->getId()}'>
+                    <button type='button' class='btn btn-sm btn-warning me-2' id='cancelButton'><i class='bi bi-pencil-square'></i></button>
+                </a>
+                <a style='margin-right: 10px;text-decoration: none;color: blue;' href='../views/userManagement.php?excluir={$user->getId()}'>
+                    <button type='button' class='btn btn-sm btn-danger me-2' id='cancelButton'><i class='bi bi-trash'></i></button>
+                </a>
             </td>
         </tr>";
     }

@@ -9,14 +9,13 @@
     <title>Gerenciamento de Schemas de Exame</title>
 </head>
 
-<body>
+<body style="background-color: #BCB8B1">
     <?php
     include 'header.php';
     ?>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-lg-5 col-md-12 mb-4">
-                <h3>Criar / Editar Schema</h3>
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <div class="mt-3 mb-3 bg-light p-3 border rounded" style="width: 50%;">
+            <div class="container">
                 <form id="schemaForm">
                     <input type="hidden" id="schemaId">
 
@@ -29,7 +28,7 @@
                         <label for="descricao" class="form-label">Descrição</label>
                         <input type="text" class="form-control" id="descricao">
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="versao" class="form-label">Versão</label>
                         <input type="text" class="form-control" id="versao" value="1.0" required>
@@ -39,34 +38,21 @@
                         <label for="campos" class="form-label">Campos (em formato JSON)</label>
                         <textarea class="form-control" id="campos" rows="6" required></textarea>
                         <div class="form-text">
-                            Exemplo: <code>[{"nome":"Hemoglobina", "tipo":"number"}, {"nome":"Observação", "tipo":"text"}]</code>
+                            Exemplo:
+                            <code>[{"nome":"Hemoglobina", "tipo":"number"}, {"nome":"Observação", "tipo":"text"}]</code>
                         </div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                    <button type="button" class="btn btn-secondary" id="cancelButton" style="display: none;">Cancelar Edição</button>
+                    <div class='w-100 d-flex justify-content-end'>
+                        <div class='d-flex'>
+                            <button type="button" class="btn btn-danger" id="cancelButton"
+                                onclick="cancelOperation()">Cancelar</button>
+                            <button type="submit" class="btn btn-primary ms-2">Salvar</button>
+                        </div>
+                    </div>
                 </form>
-            </div>
-            <div class="col-lg-7 col-md-12">
-                <h3>Schemas Cadastrados</h3>
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Versão</th>
-                                <th class="text-center">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="schemaTableBody">
-                            </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
-
     <script>
         // URL base da sua API em Node.js
         const API_URL = 'http://localhost:3000';
@@ -79,93 +65,44 @@
         const versaoInput = document.getElementById('versao');
         const camposInput = document.getElementById('campos');
         const tableBody = document.getElementById('schemaTableBody');
-        const cancelButton = document.getElementById('cancelButton');
-
-        /**
-         * Busca todos os schemas na API e preenche a tabela
-         */
-        async function fetchSchemas() {
-            try {
-                const response = await fetch(`${API_URL}/schema`);
-                if (!response.ok) throw new Error('Falha na resposta da API');
-                
-                const schemas = await response.json();
-
-                tableBody.innerHTML = ''; // Limpa a tabela antes de preencher
-                schemas.forEach(schema => {
-                    const row = `
-                        <tr>
-                            <td>${schema.id}</td>
-                            <td>${schema.nome}</td>
-                            <td>${schema.versao}</td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-warning me-2" onclick="editSchema(${schema.id})" title="Editar">
-                                    <i class="bi bi-pencil-square"></i>
-                                </button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteSchema(${schema.id})" title="Excluir">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                    tableBody.innerHTML += row;
-                });
-            } catch (error) {
-                console.error('Erro ao buscar schemas:', error);
-                tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Falha ao carregar dados da API. Verifique se o servidor Node.js está rodando.</td></tr>';
-            }
-        }
 
         /**
          * Busca um schema por ID e preenche o formulário para edição
          */
-        async function editSchema(id) {
+        async function editSchema() {
             try {
-                const response = await fetch(`${API_URL}/schema/${id}`);
-                if (!response.ok) throw new Error('Schema não encontrado.');
+                const urlParams = new URLSearchParams(window.location.search);
 
-                const schema = await response.json();
+                if (urlParams.get('edit')) {
+                    const response = await fetch(`${API_URL}/schema/${urlParams.get('edit')}`);
+                    if (!response.ok) throw new Error('Schema não encontrado.');
 
-                schemaIdInput.value = schema.id;
-                nomeInput.value = schema.nome;
-                descricaoInput.value = schema.descricao;
-                versaoInput.value = schema.versao;
-                // Formata o JSON para ser mais legível no textarea
-                camposInput.value = JSON.stringify(schema.campos, null, 2); 
+                    const schema = await response.json();
 
-                cancelButton.style.display = 'inline-block';
-                form.querySelector('button[type="submit"]').textContent = 'Atualizar';
-                window.scrollTo(0, 0); // Rola a página para o topo para focar no formulário
+                    schemaIdInput.value = schema.id;
+                    nomeInput.value = schema.nome;
+                    descricaoInput.value = schema.descricao;
+                    versaoInput.value = schema.versao;
+                    // Formata o JSON para ser mais legível no textarea
+                    camposInput.value = JSON.stringify(schema.campos, null, 2);
+
+                    form.querySelector('button[type="submit"]').textContent = 'Atualizar';
+                    window.scrollTo(0, 0); // Rola a página para o topo para focar no formulário
+                }
             } catch (error) {
                 console.error('Erro ao buscar schema para edição:', error);
                 alert(error.message);
             }
         }
-        
-        /**
-         * Deleta um schema após confirmação
-         */
-        async function deleteSchema(id) {
-            if (!confirm(`Tem certeza que deseja excluir o Schema com ID ${id}?`)) {
-                return;
-            }
 
-            try {
-                const response = await fetch(`${API_URL}/schema/${id}`, { method: 'DELETE' });
-                if (response.status !== 204) throw new Error('Erro ao deletar.');
-                
-                fetchSchemas(); // Recarrega a lista
-            } catch (error) {
-                console.error('Erro ao deletar schema:', error);
-                alert(error.message);
-            }
+        function cancelOperation() {
+            window.location.href = 'http://localhost/webapp/main/php/views/schemaList.php';
         }
 
         // Reseta o formulário
         function resetForm() {
             form.reset();
             schemaIdInput.value = '';
-            cancelButton.style.display = 'none';
             form.querySelector('button[type="submit"]').textContent = 'Salvar';
         }
 
@@ -187,7 +124,7 @@
                 versao: versaoInput.value,
                 campos: camposData
             };
-            
+
             const id = schemaIdInput.value;
             const method = id ? 'PUT' : 'POST';
             const url = id ? `${API_URL}/schema/${id}` : `${API_URL}/schema`;
@@ -198,12 +135,12 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(schemaData)
                 });
-                
+
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.message || 'Ocorreu um erro ao salvar.');
                 }
-                
+
                 resetForm();
                 fetchSchemas();
 
@@ -212,11 +149,10 @@
                 alert('Erro ao salvar: ' + error.message);
             }
         });
-        
-        cancelButton.addEventListener('click', resetForm);
 
         // Carrega os dados iniciais quando a página é carregada
-        document.addEventListener('DOMContentLoaded', fetchSchemas);
+        document.addEventListener('DOMContentLoaded', editSchema);
     </script>
 </body>
+
 </html>

@@ -1,5 +1,5 @@
 <?php
-
+require __DIR__ . '/../dao/IGenericMainData.php';
 class Paciente implements IGenericMainData
 {
     private string $id;
@@ -10,7 +10,6 @@ class Paciente implements IGenericMainData
     private string $telefone;
     private string $email;
     private string $endereco;
-    private string $senha;
     private ?string $RGM;
     private array $exames = []; // Lista de objetos Exame
 
@@ -94,16 +93,6 @@ class Paciente implements IGenericMainData
     public function setEndereco(string $endereco): void
     {
         $this->endereco = $endereco;
-    }
-
-    public function getSenha(): string
-    {
-        return $this->senha;
-    }
-
-    public function setSenha(string $senha): void
-    {
-        $this->senha = $senha;
     }
 
     public function getRGM(): ?string

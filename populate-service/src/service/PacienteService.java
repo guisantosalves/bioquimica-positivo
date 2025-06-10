@@ -23,8 +23,8 @@ public class PacienteService implements ICrud {
       return;
     }
 
-    String sql = "INSERT INTO Paciente (id, nome, cpf, dataNascimento, sexo, telefone, email, endereco, senha, rgm) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO Paciente (id, nome, cpf, dataNascimento, sexo, telefone, email, endereco, rgm) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement pstmt = con.prepareStatement(sql)) {
       pstmt.setString(1, paciente.getId());
@@ -39,8 +39,7 @@ public class PacienteService implements ICrud {
       pstmt.setString(6, paciente.getTelefone());
       pstmt.setString(7, paciente.getEmail());
       pstmt.setString(8, paciente.getEndereco());
-      pstmt.setString(9, paciente.getSenha());
-      pstmt.setString(10, paciente.getRGM());
+      pstmt.setString(9, paciente.getRGM());
 
       pstmt.executeUpdate();
       System.out.println("Paciente inserido no banco com sucesso: " + paciente.getNome() + " (ID: " + paciente.getId() + ")");

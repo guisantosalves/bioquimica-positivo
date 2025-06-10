@@ -1,10 +1,10 @@
-import prisma from "@prisma/client";
-
+import prisma from "../prisma/client.js";
 
 export default class PacienteService {
   static async getPaciente(req, res) {
     try {
       const pacientes = await prisma.paciente.findMany();
+      console.log("pacientes");
       res.status(200).json(pacientes);
     } catch (error) {
       res
@@ -17,7 +17,7 @@ export default class PacienteService {
     try {
       const { id } = req.params;
       const paciente = await prisma.paciente.findUnique({
-        where: { id: Number(id) },
+        where: { id: id },
       });
 
       if (!paciente) {
@@ -48,11 +48,24 @@ export default class PacienteService {
   static async updatePaciente(req, res) {
     try {
       const { id } = req.params;
-      const data = req.body;
+      let { nome, cpf, dataNascimento, sexo, telefone, email, endereco, RGM } =
+        req.body;
+
+      if (dataNascimento && dataNascimento != null)
+        dataNascimento = new Date(dataNascimento).toISOString();
 
       const pacienteAtualizado = await prisma.paciente.update({
-        where: { id: Number(id) },
-        data,
+        where: { id: id },
+        data: {
+          nome,
+          cpf,
+          dataNascimento,
+          sexo,
+          telefone,
+          email,
+          endereco,
+          RGM,
+        },
       });
 
       res.status(200).json(pacienteAtualizado);
@@ -68,7 +81,7 @@ export default class PacienteService {
       const { id } = req.params;
 
       await prisma.paciente.delete({
-        where: { id: Number(id) },
+        where: { id: id },
       });
 
       res.status(204).send();

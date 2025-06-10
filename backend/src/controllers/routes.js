@@ -11,6 +11,12 @@ routes
   .get(PacienteController.getPacientes)
   .post(PacienteController.postPaciente);
 
+routes
+  .route("/paciente/:id")
+  .get(PacienteController.getPacienteById)
+  .put(PacienteController.updatePaciente)
+  .delete(PacienteController.deletePaciente);
+
 // exame schema
 routes
   .route("/schema")
