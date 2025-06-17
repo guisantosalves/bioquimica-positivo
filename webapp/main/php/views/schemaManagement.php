@@ -44,8 +44,7 @@
                     </div>
                     <div class='w-100 d-flex justify-content-end'>
                         <div class='d-flex'>
-                            <button type="button" class="btn btn-danger" id="cancelButton"
-                                onclick="cancelOperation()">Cancelar</button>
+                            <a href="./schemaList.php" class="btn btn-danger">Cancelar</a>
                             <button type="submit" class="btn btn-primary ms-2">Salvar</button>
                         </div>
                     </div>
@@ -95,10 +94,6 @@
             }
         }
 
-        function cancelOperation() {
-            window.location.href = 'http://localhost/webapp/main/php/views/schemaList.php';
-        }
-
         // Reseta o formulário
         function resetForm() {
             form.reset();
@@ -141,12 +136,12 @@
                     throw new Error(errorData.message || 'Ocorreu um erro ao salvar.');
                 }
 
-                resetForm();
-                fetchSchemas();
+                // Redireciona para a página da lista após o sucesso
+                 window.location.href = './schemaList.php';
 
             } catch (error) {
                 console.error('Erro ao salvar schema:', error);
-                alert('Erro ao salvar: ' + error.message);
+                 alert('Erro ao salvar: ' + error.message);
             }
         });
 

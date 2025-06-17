@@ -94,9 +94,9 @@
                             <td>${schema.nome}</td>
                             <td>${schema.versao}</td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-warning me-2" onclick="editSchema(${schema.id})" title="Editar">
+                                <a href="./schemaManagement.php?edit=${schema.id}" class="btn btn-sm btn-warning me-2" title="Editar">
                                     <i class="bi bi-pencil-square"></i>
-                                </button>
+                                </a>
                                 <button class="btn btn-sm btn-danger" onclick="deleteSchema(${schema.id})" title="Excluir">
                                     <i class="bi bi-trash"></i>
                                 </button>
@@ -112,13 +112,6 @@
         }
 
         /**
-         * Busca um schema por ID e preenche o formulário para edição
-         */
-        async function editSchema(id) {
-            window.location.href = `http://localhost/webapp/main/php/views/schemaManagement.php?edit=${id}`;
-        }
-
-        /**
          * Deleta um schema após confirmação
          */
         async function deleteSchema(id) {
@@ -127,15 +120,26 @@
             }
 
             try {
-                const response = await fetch(`${API_URL}/schema/${id}`, { method: 'DELETE' });
-                if (response.status !== 204) throw new Error('Erro ao deletar.');
+            const response = await fetch(`${API_URL}/schema/${id}`, { method: 'DELETE' });
 
-                fetchSchemas(); // Recarrega a lista
+            // Se a resposta NÃO for de sucesso (ex: 409, 404, etc.)
+            if (!response.ok) {
+                //Tenta ler o corpo da resposta para pegar a mensagem específica do Node.js
+                const errorData = await response.json().catch(() => null);
+
+                //Lança um erro usando a MENSAGEM DO BACK-END
+                throw new Error(errorData?.message || `Ocorreu um erro. Status: ${response.status}`);
+            }
+
+            // Se a resposta foi de sucesso, simplesmente atualiza a lista
+            fetchSchemas();
+
             } catch (error) {
                 console.error('Erro ao deletar schema:', error);
+                //Eexibir a mensagem vinda diretamente do Node.js!
                 alert(error.message);
             }
-        }
+}
 
         // Carrega os dados iniciais quando a página é carregada
         document.addEventListener('DOMContentLoaded', fetchSchemas);
