@@ -136,7 +136,7 @@
 
             } catch (error) {
                 console.error('Erro ao deletar schema:', error);
-                //Eexibir a mensagem vinda diretamente do Node.js!
+                //Exibir a mensagem vinda diretamente do Node.js!
                 alert(error.message);
             }
 }
