@@ -115,6 +115,10 @@ export default class ExameSchemaService {
       
     } catch (error) {
       console.error(`Error deleting schema ID ${id} in service:`, error);
+      //Trata o erro de violação de chave estrangeira
+      if (error.code === 'P2003') {
+        throw { status: 409, message: 'Não é possível excluir este schema, pois ele já está sendo utilizado por um ou mais exames.' };
+      }
       if (error.code === 'P2025') {
         throw { status: 404, message: 'Schema de exame não encontrado para exclusão.' };
       }
