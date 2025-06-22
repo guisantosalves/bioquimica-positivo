@@ -41,7 +41,9 @@ export default class ExameSchemaService {
   }
 
   static async getSchemaById(id) {
+    //Converte o ID (que vem da URL como string) para um número inteiro
     const schemaId = parseInt(id);
+    //Valida se o ID é um número válido.
     if (isNaN(schemaId)) {
       throw { status: 400, message: 'ID inválido.' };
     }
@@ -82,6 +84,7 @@ export default class ExameSchemaService {
     }
     
     try {
+      //O 'where' encontra o registro, e 'data' define os novos valores.
       const updatedSchema = await prisma.exameSchema.update({
         where: { id: schemaId },
         data: {

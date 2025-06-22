@@ -37,6 +37,7 @@ export default class ExameSchemaController {
     }
   }
 
+  //Status 204 (No Content) - Não retornam conteúdo no corpo da resposta.
   static async deleteSchema(req, res) {
     try {
       await ExameSchemaService.deleteSchema(req.params.id);
