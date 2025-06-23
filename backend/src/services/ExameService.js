@@ -182,13 +182,13 @@ export default class ExameService {
               const currCampos = exame.schema.campos.find(
                 (item) => item.nome === key
               );
-              return `<li><strong>${key}:</strong> ${value} ${
-                currCampos.unidade ? `| unidade: ${currCampos.unidade}` : ""
-              } ${
-                currCampos.valor_referencia
-                  ? `| valor referência: ${currCampos.valor_referencia}`
-                  : ""
-              }</li>`;
+              return `<li><strong>${key}:</strong> Valores absolutos: ${value} ${
+              currCampos.valor_referencia
+                ? `| Valores de Referência: ${currCampos.valor_referencia}`
+                : ""
+            } ${
+              currCampos.unidade ? `| Unidade: ${currCampos.unidade}` : ""
+            }</li>`;
             })
             .join("")}
         </ul>
