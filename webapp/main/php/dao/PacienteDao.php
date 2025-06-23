@@ -1,7 +1,8 @@
 <?php
-require 'ICrudData.php';
-require 'ConnectionFactory.php';
-require __DIR__ . '/../utils/ManageUuid.php';
+require_once 'ICrudData.php';
+require_once 'ConnectionFactory.php';
+require_once __DIR__ . '/../utils/ManageUuid.php';
+require_once __DIR__ . '/../model/Paciente.php';
 class PacienteDao implements ICrudData
 {
     private $apiBaseUrl;

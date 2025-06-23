@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../dao/IGenericMainData.php';
+require_once __DIR__ . '/../dao/IGenericMainData.php';
 class Paciente implements IGenericMainData
 {
     private string $id;

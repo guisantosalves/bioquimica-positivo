@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/../dao/IGenericMainData.php';
 class ExameSchema implements IGenericMainData
 {
     private int $id;

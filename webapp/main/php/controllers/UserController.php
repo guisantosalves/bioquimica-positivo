@@ -74,6 +74,7 @@ function deleteOne($id)
 {
     $userDao = new UserDao();
     $userDao->delete($id);
+    header("Location: ../views/userList.php");
 }
 
 function getById($id)

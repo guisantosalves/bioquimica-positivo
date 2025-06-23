@@ -6,6 +6,7 @@
                 <a style="text-decoration: none;" href="../views/userList.php">Gerenciar usuários</a>
                 <a style="text-decoration: none;" href="../views/schemaList.php">Gerenciar Schemas</a>
                 <a style="text-decoration: none;" href="../views/pacienteList.php">Gerenciar Pacientes</a>
+                <a style="text-decoration: none;" href="../views/exameList.php">Gerenciar Exames</a>
             </div>
         </div>
         <div class="pe-2">

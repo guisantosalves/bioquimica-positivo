@@ -21,7 +21,7 @@ if (isset($_GET["excluir"])) {
 <body style="background-color: #BCB8B1">
     <?php include './header.php' ?>
     <div style="width: 100%; display: flex; justify-content: center;">
-        <div class="mt-3 mb-3 bg-light p-3 border rounded" style="width: 50%;">
+        <div class="mt-3 mb-3 bg-light p-3 border rounded" style="width: 80%;">
             <div class="container">
                 <div class="w-100 d-flex justify-content-between align-items-center">
                     <p class="h1">Usuários</p>

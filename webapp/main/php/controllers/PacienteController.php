@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . '/../dao/PacienteDao.php';
-require __DIR__ . '/../model/Paciente.php';
+require_once __DIR__ . '/../dao/PacienteDao.php';
+require_once __DIR__ . '/../model/Paciente.php';
 
 if (isset($_POST['cadastrar'])) {
     $pacienteDao = new PacienteDao('http://localhost:3000');
@@ -67,11 +67,32 @@ function deletePaciente($id)
 {
     $pacienteDao = new PacienteDao('http://localhost:3000');
     $pacienteDao->delete($id);
+    header("Location: ../views/pacienteList.php");
 }
 
 function getPacienteById($id)
 {
     $pacienteDao = new PacienteDao('http://localhost:3000');
     return $pacienteDao->readById($id);
+}
+
+function listarPacientesSelect($selectedId = null)
+{
+    $pacienteDao = new PacienteDao('http://localhost:3000');
+    $lista = $pacienteDao->read();
+
+    $html = "<div class='mb-3'>
+        <label for='idPaciente'>Paciente</label>
+        <select class='form-control' name='idPaciente' required>
+        <option value=''>Selecione um paciente</option>";
+
+    foreach ($lista as $paciente) {
+        $selected = ($paciente->getId() === $selectedId) ? 'selected' : '';
+        $html .= "<option value='{$paciente->getId()}' {$selected}>{$paciente->getNome()} - {$paciente->getCpf()}</option>";
+    }
+
+    $html .= "</select></div>";
+
+    return $html;
 }
 ?>

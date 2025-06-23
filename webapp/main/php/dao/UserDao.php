@@ -1,7 +1,7 @@
 <?php
-require 'ICrudData.php';
-require 'ConnectionFactory.php';
-require __DIR__ . '/../utils/ManageUuid.php';
+require_once  'ICrudData.php';
+require_once 'ConnectionFactory.php';
+require_once __DIR__ . '/../utils/ManageUuid.php';
 class UserDao implements ICrudData
 {
     public function inserir($user)
@@ -74,7 +74,7 @@ class UserDao implements ICrudData
             $conn->bindValue(":email", $user->getEmail());
             $conn->bindValue(":endereco", $user->getEndereco());
             if ($user->getSenha() != "") {
-                $conn->bindValue(":senha", $user->getSenha());
+                $conn->bindValue(":senha", password_hash($user->getSenha(), PASSWORD_DEFAULT));
             }
             $conn->bindValue(":RGM", $user->getRGM());
             $conn->bindValue(":admin", $user->isAdmin(), PDO::PARAM_BOOL);

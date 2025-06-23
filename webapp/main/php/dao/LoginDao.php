@@ -1,6 +1,6 @@
 <?php
 
-require 'ConnectionFactory.php';
+require_once 'ConnectionFactory.php';
 
 class LoginDao
 {

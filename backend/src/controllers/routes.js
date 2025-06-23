@@ -41,4 +41,6 @@ routes
   .put(ExameController.updateExame)
   .delete(ExameController.deleteExame);
 
+routes.route("/exame/download/:id").get(ExameController.downloadExame);
+
 export default routes;

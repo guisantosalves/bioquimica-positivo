@@ -9,7 +9,7 @@ if (isset($_POST['login'])) {
     $LoginResult = $loginD->login($email, $pass);
 
     if ($LoginResult) {
-        header("Location: ../views/userManagement.php");
+        header("Location: ../views/userList.php");
     } else {
         header("Location: ../views/login.php?login=fail");
     }

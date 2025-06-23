@@ -80,12 +80,14 @@ export default class PacienteService {
     try {
       const { id } = req.params;
 
+      console.log(id);
       await prisma.paciente.delete({
         where: { id: id },
       });
 
       res.status(204).send();
     } catch (error) {
+      console.log(error);
       res
         .status(500)
         .json({ error: "Erro ao deletar paciente", details: error.message });

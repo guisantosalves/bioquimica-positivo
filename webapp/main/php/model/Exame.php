@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/../dao/IGenericMainData.php';
 class Exame implements IGenericMainData
 {
     private int $id;
@@ -64,7 +64,7 @@ class Exame implements IGenericMainData
     {
         return $this->observacoes;
     }
-    public function getPaciente(): Cliente
+    public function getPaciente(): Paciente
     {
         return $this->paciente;
     }
@@ -98,7 +98,7 @@ class Exame implements IGenericMainData
     {
         $this->observacoes = $observacoes;
     }
-    public function setPaciente(Cliente $paciente): void
+    public function setPaciente(Paciente $paciente): void
     {
         $this->paciente = $paciente;
     }

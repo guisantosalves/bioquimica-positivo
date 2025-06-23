@@ -20,4 +20,8 @@ export default class ExameController {
   static async deleteExame(req, res) {
     await ExameService.deleteExame(req, res);
   }
+
+  static async downloadExame(req, res) {
+    await ExameService.donwload(req, res);
+  }
 }
